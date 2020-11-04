@@ -1,0 +1,26 @@
+﻿@page "/starwars"
+@using System.Net
+@using System.Net.Http
+@using BlazorApp2.Models
+@inject HttpClient Http
+
+
+<h1>Rubrik</h1>
+
+@foreach(var character in CharactersResult)
+{
+	<div><a href="StarWarsPerson/@character.">Name: @character.Name</a</div>
+}
+
+
+@code {
+
+	public StarWarsCharacter[] CharactersResult;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var response = await Http.GetFromJsonAsync<StarWarsCharactersResult>($"people/");
+		CharactersResult = response.StarWarsCharacters;
+
+	}
+}
